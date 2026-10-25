@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b72">
+  <meta name="description" content="Comprends tes exercices de mathématiques avec MathsFacile IA">
+  <link rel="manifest" href="./manifest.json">
+  <title>MathsFacile IA</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #172b4d;
+      background: #f1f5fb;
+    }
+    header {
+      padding: 25px 15px;
+      color: white;
+      text-align: center;
+      background: #123b72;
+    }
+    h1 { margin: 0 0 8px; }
+    main { max-width: 600px; margin: 25px auto; padding: 0 15px; }
+    .panel {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px #0000000c;
+    }
+    label { display: block; font-weight: bold; margin-bottom: 12px; }
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font: inherit;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #1769e0;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    #message { margin-top: 15px; line-height: 1.5; }
+    footer { padding: 20px; text-align: center; color: #64748b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MathsFacile IA</h1>
+    <p>Comprends tes exercices, étape par étape</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <label for="question">Écris ton exercice :</label>
+      <textarea id="question" placeholder="Exemple : Résous 2x + 3 = 7 et explique chaque étape."></textarea>
+      <button id="ask">Demander à ChatGPT</button>
+      <p id="message" aria-live="polite">Écris une question pour commencer.</p>
+    </section>
+  </main>
+
+  <footer>MathsFacile IA — Apprendre autrement</footer>
+
+  <script>
+    const question = document.getElementById("question");
+    const message = document.getElementById("message");
+
+    document.getElementById("ask").addEventListener("click", () => {
+      const value = question.value.trim();
+
+      if (!value) {
+        message.textContent = "Écris d'abord un exercice.";
+        return;
+      }
+
+      const prompt =
+        "Tu es MathsFacile IA, professeur de mathématiques. " +
+        "Réponds en français. Résous cet exercice étape par étape, " +
+        "explique les formules et les calculs, puis vérifie le résultat :\n\n" +
+        value;
+
+      const url = "https://chatgpt.com/?q=" + encodeURIComponent(prompt);
+      message.textContent =
+        "ChatGPT va s'ouvrir. Vérifie la question et envoie-la si nécessaire.";
+
+      window.open(url, "_blank");
+    });
+
+    if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+      navigator.serviceWorker.register("./sw.js").catch(console.error);
+    }
+  </script>
+</body>
+  </html>
+  
